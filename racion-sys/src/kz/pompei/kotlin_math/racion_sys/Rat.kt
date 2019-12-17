@@ -63,4 +63,24 @@ class Rat(up: BigInteger, dn: BigInteger) : Comparable<Rat> {
   operator fun div(other: Rat): Rat = Rat(up * other.dn, dn * other.up)
 
   fun abs(): Rat = Rat(up.abs(), dn)
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as Rat
+
+    if (up != other.up) return false
+    if (dn != other.dn) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = up.hashCode()
+    result = 31 * result + dn.hashCode()
+    return result
+  }
+
+
 }

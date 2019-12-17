@@ -67,10 +67,10 @@ class MatrixTest {
     m[2, 1] = Rat.of(14)
     m[2, 2] = Rat.of(3)
     m[2, 3] = Rat.of(2)
-    m[2, 4] = Rat.of(1)
+    m[2, 4] = Rat.of(-13)
 
     m[3, 0] = Rat.of(-8)
-    m[3, 1] = Rat.of(-18)
+    m[3, 1] = Rat.of(-1)
     m[3, 2] = Rat.of(9)
     m[3, 3] = Rat.of(-7)
     m[3, 4] = Rat.of(-13)
@@ -78,7 +78,7 @@ class MatrixTest {
     m[4, 0] = Rat.of(6)
     m[4, 1] = Rat.of(6)
     m[4, 2] = Rat.of(2)
-    m[4, 3] = Rat.of(7)
+    m[4, 3] = Rat.of(-7)
     m[4, 4] = Rat.of(-3)
 
     println("" + m)
@@ -106,9 +106,7 @@ class MatrixTest {
     println("det = " + m.det())
   }
 
-  @Test
-  fun det3() {
-
+  private fun matrix10(): Matrix {
     val m = Matrix(10, 10).makeIdentity()
 
     m[0, 0] = Rat.of(1)
@@ -116,6 +114,11 @@ class MatrixTest {
     m[0, 2] = Rat.of(5)
     m[0, 3] = Rat.of(-5)
     m[0, 4] = Rat.of(15)
+    m[0, 5] = Rat.of(13, 2)
+    m[0, 6] = Rat.of(-1, 5)
+    m[0, 7] = Rat.of(15)
+    m[0, 8] = Rat.of(-3)
+    m[0, 9] = Rat.of(9)
 
     m[1, 0] = Rat.of(2)
     m[1, 1] = Rat.of(3)
@@ -136,7 +139,7 @@ class MatrixTest {
     m[2, 6] = Rat.of(2, 11)
     m[2, 7] = Rat.of(2, 21)
     m[2, 8] = Rat.of(2, 11)
-    m[2, 9] = Rat.of(1)
+    m[2, 9] = Rat.of(11)
 
     m[3, 0] = Rat.of(1)
     m[3, 1] = Rat.of(7)
@@ -205,7 +208,7 @@ class MatrixTest {
     m[8, 9] = Rat.of(-3)
 
     m[9, 0] = Rat.of(8)
-    m[9, 1] = Rat.of(7, 4)
+    m[9, 1] = Rat.of(-7, 4)
     m[9, 2] = Rat.of(7)
     m[9, 3] = Rat.of(-2)
     m[9, 4] = Rat.of(-1)
@@ -215,7 +218,55 @@ class MatrixTest {
     m[9, 8] = Rat.of(-4)
     m[9, 9] = Rat.of(-4)
 
+    return m
+  }
+
+  @Test
+  fun det3() {
+
+    val m = matrix10()
+
     println("" + m)
     println("det = " + m.det())
   }
+
+  @Test
+  fun invert() {
+
+    val m1 = matrix10()
+    println("" + m1)
+
+    val m2 = m1.power(-1)
+    println("" + m2)
+
+    val m3 = m1 * m2
+    println("" + m3)
+
+  }
+
+  @Test
+  fun invert2() {
+
+    val m = Matrix(3, 3)
+
+    m[0, 0] = Rat.of(1)
+    m[0, 1] = Rat.of(3)
+    m[0, 2] = Rat.of(5)
+
+    m[1, 0] = Rat.of(2)
+    m[1, 1] = Rat.of(3)
+    m[1, 2] = Rat.of(0)
+
+    m[2, 0] = Rat.of(1)
+    m[2, 1] = Rat.of(7)
+    m[2, 2] = Rat.of(2)
+
+    println("" + m)
+    val mm1 = m.power(-1)
+    println("" + mm1)
+
+    val m2 = m * mm1
+    println("" + m2)
+  }
+
 }

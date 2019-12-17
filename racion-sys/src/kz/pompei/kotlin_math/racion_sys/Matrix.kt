@@ -132,7 +132,7 @@ class Matrix(val size1: Int, val size2: Int) {
         }
       }
 
-      println("" + from(mat))
+//      println("" + from(mat))
 
       if (k < n) {
         val line: Array<Rat> = mat[n]
@@ -143,15 +143,15 @@ class Matrix(val size1: Int, val size2: Int) {
         swapCount += n - k
       }
 
-      if (Rat.zero().compareTo(max) == 0) return Rat.zero()
+      if (max == Rat.zero()) return Rat.zero()
 
-      println("" + from(mat))
+//      println("" + from(mat))
 
       for (i in (k + 1 until size1)) {
 
         val q = mat[i][k]
 
-        if (q.compareTo(Rat.zero()) == 0) {
+        if (q == Rat.zero()) {
           continue
         }
 
@@ -161,11 +161,11 @@ class Matrix(val size1: Int, val size2: Int) {
           mat[i][j] -= w * mat[k][j]
         }
 
-        println("" + from(mat))
+//        println("" + from(mat))
 
       }
 
-      println("" + from(mat))
+//      println("" + from(mat))
 
     }
 
@@ -176,6 +176,64 @@ class Matrix(val size1: Int, val size2: Int) {
     }
 
     return if (swapCount % 2 == 0) ret else -ret
+  }
+
+  fun minor(I: Int, J: Int): Matrix {
+    val ret = Matrix(size1 - 1, size2 - 1)
+
+    for (i in (0 until size1 - 1)) {
+      for (j in (0 until size2 - 1)) {
+        ret[i, j] = this[if (i < I) i else i + 1, if (j < J) j else j + 1]
+      }
+    }
+
+    return ret
+  }
+
+  fun algebraic(i: Int, j: Int): Rat {
+    val ret = minor(i, j).det()
+    return if ((i + j) % 2 == 0) ret else -ret
+  }
+
+  fun trans(): Matrix {
+    val ret = Matrix(size2, size1)
+    for (i in (0 until size1)) {
+      for (j in (0 until size2)) {
+        ret[j, i] = this[i, j]
+      }
+    }
+    return ret
+  }
+
+  fun power(n: Int): Matrix {
+    if (n == 0) {
+      return Matrix(size1, size2).makeIdentity()
+    }
+
+    val invert = n < 0
+
+    var ret = copy()
+
+    for (i in (1 until n)) {
+      ret *= this
+    }
+
+    return if (invert) ret.invert() else ret
+
+  }
+
+  private fun invert(): Matrix {
+    val det = det()
+    val m = trans()
+    val ret = Matrix(size1, size2)
+
+    for (i in (0 until size2)) {
+      for (j in (0 until size1)) {
+        ret[i, j] = m.algebraic(i, j) / det
+      }
+    }
+
+    return ret
   }
 
 }
