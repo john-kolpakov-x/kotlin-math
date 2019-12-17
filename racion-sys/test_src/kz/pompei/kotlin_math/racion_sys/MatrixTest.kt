@@ -1,6 +1,8 @@
 package kz.pompei.kotlin_math.racion_sys
 
 import org.testng.annotations.Test
+import java.security.SecureRandom
+import kotlin.math.absoluteValue
 
 class MatrixTest {
 
@@ -47,9 +49,7 @@ class MatrixTest {
     println("det = " + m3.det())
   }
 
-  @Test
-  fun det() {
-
+  private fun matrix5(): Matrix {
     val m = Matrix(5, 5).makeIdentity()
     m[0, 0] = Rat.of(-3)
     m[0, 1] = Rat.of(7)
@@ -81,8 +81,26 @@ class MatrixTest {
     m[4, 3] = Rat.of(-7)
     m[4, 4] = Rat.of(-3)
 
+    return m
+  }
+
+  @Test
+  fun det() {
+    val m = matrix5()
     println("" + m)
     println("det = " + m.det())
+  }
+
+  @Test
+  fun power() {
+    val m1 = matrix5()
+    println("" + m1)
+    val m2 = m1.power(2)
+    println("" + m2)
+    val m3 = m1.power(-1)
+    println("" + m3)
+    val m4 = m1 * m3
+    println("" + m4)
   }
 
   @Test
@@ -269,4 +287,159 @@ class MatrixTest {
     println("" + m2)
   }
 
+  @Test
+  fun det_power() {
+
+    val m = Matrix(30, 30)
+    m[0, 0] = Rat.of(1)
+    m[0, 1] = Rat.of(2)
+    m[0, 2] = Rat.of(3)
+
+    m[1, 0] = Rat.of(3)
+    m[1, 1] = Rat.of(-2)
+    m[1, 2] = Rat.of(1)
+
+    m[2, 1] = Rat.of(7)
+    m[2, 2] = Rat.of(8)
+    m[2, 3] = Rat.of(9)
+
+    m[3, 2] = Rat.of(-1)
+    m[3, 3] = Rat.of(11)
+    m[3, 4] = Rat.of(12)
+
+    m[4, 3] = Rat.of(12)
+    m[4, 4] = Rat.of(13)
+    m[4, 5] = Rat.of(14)
+
+    m[5, 4] = Rat.of(14)
+    m[5, 5] = Rat.of(15)
+    m[5, 6] = Rat.of(16)
+
+    m[6, 5] = Rat.of(16)
+    m[6, 6] = Rat.of(17)
+    m[6, 7] = Rat.of(18)
+
+    m[7, 6] = Rat.of(-11)
+    m[7, 7] = Rat.of(-7)
+    m[7, 8] = Rat.of(9)
+
+    m[8, 7] = Rat.of(-9)
+    m[8, 8] = Rat.of(1)
+    m[8, 9] = Rat.of(-9)
+
+    m[9, 8] = Rat.of(1)
+    m[9, 9] = Rat.of(2)
+    m[9, 10] = Rat.of(-6)
+
+    m[10, 9] = Rat.of(-1)
+    m[10, 10] = Rat.of(1)
+    m[10, 11] = Rat.of(5)
+
+    m[11, 10] = Rat.of(11)
+    m[11, 11] = Rat.of(12)
+    m[11, 12] = Rat.of(13)
+
+    m[12, 11] = Rat.of(13)
+    m[12, 12] = Rat.of(12)
+    m[12, 13] = Rat.of(11)
+
+    m[13, 12] = Rat.of(1)
+    m[13, 13] = Rat.of(17)
+    m[13, 14] = Rat.of(18)
+
+    m[14, 13] = Rat.of(8)
+    m[14, 14] = Rat.of(9)
+    m[14, 15] = Rat.of(1)
+
+    m[15, 14] = Rat.of(1)
+    m[15, 15] = Rat.of(5)
+    m[15, 16] = Rat.of(6)
+
+    m[16, 15] = Rat.of(1)
+    m[16, 16] = Rat.of(3)
+    m[16, 17] = Rat.of(-1)
+
+    m[17, 16] = Rat.of(11)
+    m[17, 17] = Rat.of(14)
+    m[17, 18] = Rat.of(41)
+
+    m[18, 17] = Rat.of(18)
+    m[18, 18] = Rat.of(19)
+    m[18, 19] = Rat.of(10)
+
+    m[19, 18] = Rat.of(31)
+    m[19, 19] = Rat.of(13)
+    m[19, 20] = Rat.of(17)
+
+    m[20, 19] = Rat.of(13)
+    m[20, 20] = Rat.of(31)
+    m[20, 21] = Rat.of(13)
+
+    m[21, 20] = Rat.of(1)
+    m[21, 21] = Rat.of(1)
+    m[21, 22] = Rat.of(1)
+
+    m[22, 21] = Rat.of(1)
+    m[22, 22] = Rat.of(1)
+    m[22, 23] = Rat.of(1)
+
+    m[23, 22] = Rat.of(1)
+    m[23, 23] = Rat.of(1)
+    m[23, 24] = Rat.of(1)
+
+    m[24, 23] = Rat.of(1)
+    m[24, 24] = Rat.of(1)
+    m[24, 25] = Rat.of(1)
+
+    m[25, 24] = Rat.of(1)
+    m[25, 25] = Rat.of(-3)
+    m[25, 26] = Rat.of(1)
+
+    m[26, 25] = Rat.of(1)
+    m[26, 26] = Rat.of(-18)
+    m[26, 27] = Rat.of(1)
+
+    m[27, 26] = Rat.of(-1)
+    m[27, 27] = Rat.of(13)
+    m[27, 28] = Rat.of(-1)
+
+    m[28, 27] = Rat.of(12)
+    m[28, 28] = Rat.of(1)
+    m[28, 29] = Rat.of(11)
+
+    m[29, 27] = Rat.of(1)
+    m[29, 28] = Rat.of(-1)
+    m[29, 29] = Rat.of(1)
+
+    m[10, 20] = Rat.of(-111, 11)
+    m[20, 10] = Rat.of(-171, 7)
+    m[25, 3] = Rat.of(-37, 134)
+
+    println("" + m)
+    println("" + m.power(-1))
+    println("" + m.power(-1) * m)
+
+  }
+
+
+  @Test
+  fun det_power2() {
+
+    val rnd = SecureRandom()
+
+    val S = 7
+
+    val m = Matrix(10, 10)
+    for (i in (0 until m.size1)) {
+      for (j in (0 until m.size2)) {
+        m[i, j] = Rat.of(rnd.nextLong() % S, rnd.nextLong().absoluteValue % S + 1)
+      }
+    }
+
+    println("" + m)
+    val m1 = m.power(-1)
+    println("" + m1)
+    println("" + m1 * m)
+
+  }
 }
