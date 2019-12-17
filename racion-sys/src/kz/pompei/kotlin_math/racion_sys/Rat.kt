@@ -29,7 +29,7 @@ class Rat(up: BigInteger, dn: BigInteger) : Comparable<Rat> {
 
   override fun toString(): String {
     if (dn.compareTo(BigInteger.ONE) == 0) {
-      return "$up";
+      return "$up"
     }
 
     if (up.abs() < dn) {
