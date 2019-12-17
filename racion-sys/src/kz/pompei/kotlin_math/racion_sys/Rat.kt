@@ -32,14 +32,16 @@ class Rat(up: BigInteger, dn: BigInteger) : Comparable<Rat> {
       return "$up"
     }
 
-    if (up.abs() < dn) {
+    val upAbs = up.abs()
+
+    if (upAbs < dn) {
       return "$up/$dn"
     }
 
     val sign = if (up < BigInteger.ZERO) "-" else ""
 
-    val a = up.abs() / dn
-    val r = up.abs() % dn
+    val a = upAbs / dn
+    val r = upAbs % dn
 
     return "$sign$a|$r/$dn"
   }
@@ -77,9 +79,7 @@ class Rat(up: BigInteger, dn: BigInteger) : Comparable<Rat> {
   }
 
   override fun hashCode(): Int {
-    var result = up.hashCode()
-    result = 31 * result + dn.hashCode()
-    return result
+    return 31 * up.hashCode() + dn.hashCode()
   }
 
 
