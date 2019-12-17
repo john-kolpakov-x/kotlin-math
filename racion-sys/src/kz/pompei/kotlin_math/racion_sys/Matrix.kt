@@ -10,10 +10,10 @@ class Matrix(val size1: Int, val size2: Int) {
 
   private val data: Array<Rat> = Array(size1 * size2) { Rat.zero() }
 
-  operator fun get(i1: Int, i2: Int): Rat = data[i1 * size1 + i2]
+  operator fun get(i1: Int, i2: Int): Rat = data[i1 * size2 + i2]
 
   operator fun set(i1: Int, i2: Int, value: Rat) {
-    data[i1 * size1 + i2] = value
+    data[i1 * size2 + i2] = value
   }
 
   fun makeNegate(): Matrix {
@@ -68,7 +68,7 @@ class Matrix(val size1: Int, val size2: Int) {
 
     for (i1 in (0 until size1)) {
       for (i2 in (0 until size2)) {
-        val length = str[i1 * size1 + i2].length
+        val length = str[i1 * size2 + i2].length
         if (sizes[i2] < length) {
           sizes[i2] = length
         }
@@ -80,7 +80,7 @@ class Matrix(val size1: Int, val size2: Int) {
     for (i1 in (0 until size1)) {
       for (i2 in (0 until size2)) {
         if (i2 > 0) sb.append(' ')
-        sb.append(str[i1 * size1 + i2].toLenRight(sizes[i2]))
+        sb.append(str[i1 * size2 + i2].toLenRight(sizes[i2]))
       }
       sb.append('\n')
     }
