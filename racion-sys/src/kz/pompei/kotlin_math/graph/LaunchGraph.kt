@@ -1,41 +1,70 @@
-package kz.pompei.kotlin_math.graph;
+package kz.pompei.kotlin_math.graph
 
-import javax.imageio.ImageIO;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import kz.pompei.kotlin_math.graph.model.vec
+import java.awt.Color
+import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
+import kotlin.math.cos
+import kotlin.math.sin
 
-public class LaunchGraph {
+class LaunchGraph {
 
-  public static void main(String[] args) throws Exception {
-    new LaunchGraph().exec();
+  companion object {
+    @JvmStatic
+    fun main(args: Array<String>) {
+      LaunchGraph().exec()
+    }
   }
 
-  private void exec() throws Exception {
+  private fun exec() {
+    val image = BufferedImage(1000, 700, BufferedImage.TYPE_INT_ARGB)
+    val graphics = image.createGraphics()
+    graphics.color = Color.WHITE
+    graphics.fillRect(0, 0, image.width, image.height)
+    DrawGraphics2D(graphics, image.width.toDouble(), image.height.toDouble())
+      .offset(vec(500, 350)).use { d ->
+        d
+          .color(Color.GRAY)
+          .line(
+            vec(-500, 0),
+            vec(500, 0)
+          )
+          .line(
+            vec(0, -350),
+            vec(0, 350)
+          )
 
-    BufferedImage image = new BufferedImage(1000, 700, BufferedImage.TYPE_INT_ARGB);
+        drawEllipse(d)
 
-    Graphics2D graphics = image.createGraphics();
-    graphics.setColor(Color.WHITE);
-    graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+      }
+    val file = File("build/out-image.png")
+    ImageIO.write(image, "png", file)
+    println("asd")
+  }
 
-    try (DrawGraphics2D d = new DrawGraphics2D(graphics, image.getWidth(), image.getHeight())
-      .offset(new Vec2(500, 350))) {
+  private fun drawEllipse(d: Draw) {
 
-      d
-        .color(Color.GRAY)
-        .line(new Vec2(-500, 0), new Vec2(500, 0))
-        .line(new Vec2(0, -350), new Vec2(0, 350))
-      ;
+    d.color(Color.BLACK)
+
+    val N = 100
+    val Rx = 400.0
+    val Ry = 300.0
+
+    for (i in 1..N) {
+
+      val fi1 = 2 * Math.PI / N * (i - 1)
+      val fi2 = 2 * Math.PI / N * i
+
+      val A = vec(Rx * cos(fi1), Ry * sin(fi1))
+      val B = vec(Rx * cos(fi2), Ry * sin(fi2))
+
+      d.line(A, B)
 
     }
 
-    File file = new File("build/out-image.png");
+    d.line(vec(100, 100), vec(300, 150))
 
-    ImageIO.write(image, "png", file);
-
-    System.out.println("asd");
   }
 
 }

@@ -1,45 +1,37 @@
-package kz.pompei.kotlin_math.graph;
+package kz.pompei.kotlin_math.graph
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import kz.pompei.kotlin_math.graph.model.vec
+import java.awt.Color
+import java.awt.Graphics2D
 
-public class DrawGraphics2D implements Draw, AutoCloseable {
-  private final Graphics2D g;
-  private final double width;
-  private final double height;
-  private Vec2 offset = new Vec2(0, 0);
+class DrawGraphics2D(private val g: Graphics2D, private val width: Double, private val height: Double) : Draw,
+  AutoCloseable {
 
-  public DrawGraphics2D(Graphics2D g, double width, double height) {
-    this.g = g;
-    this.width = width;
-    this.height = height;
+  private var offset = vec(0.0, 0.0)
+
+  override fun color(color: Color): DrawGraphics2D {
+    g.color = color
+    return this
   }
 
-  @Override
-  public DrawGraphics2D color(Color color) {
-    g.setColor(color);
-    return this;
+  fun offset(offset: vec): DrawGraphics2D {
+    this.offset = offset
+    return this
   }
 
-  public DrawGraphics2D offset(Vec2 offset) {
-    this.offset = offset;
-    return this;
+  private fun toScreen(a: vec): vec {
+    return vec(a.x + offset.x, height - a.y - offset.y)
   }
 
-  private Vec2 toScreen(Vec2 a) {
-    return new Vec2(a.getX() + offset.getX(), height - a.getY() - offset.getY());
+  override fun line(a: vec, b: vec): DrawGraphics2D {
+    val a1 = toScreen(a)
+    val b1 = toScreen(b)
+    g.drawLine(a1.intX, a1.intY, b1.intX, b1.intY)
+    return this
   }
 
-  @Override
-  public DrawGraphics2D line(Vec2 a, Vec2 b) {
-    Vec2 a1 = toScreen(a);
-    Vec2 b1 = toScreen(b);
-    g.drawLine(a1.getIntX(), a1.getIntY(), b1.getIntX(), b1.getIntY());
-    return this;
+  override fun close() {
+    g.dispose()
   }
 
-  @Override
-  public void close() {
-    g.dispose();
-  }
 }

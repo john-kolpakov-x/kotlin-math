@@ -1,11 +1,12 @@
-package kz.pompei.kotlin_math.graph;
+package kz.pompei.kotlin_math.graph
 
-import java.awt.Color;
+import kz.pompei.kotlin_math.graph.model.vec
+import java.awt.Color
 
-public interface Draw {
+interface Draw {
 
-  Draw color(Color color);
+  fun color(color: Color): Draw
 
-  Draw line(Vec2 a, Vec2 b);
+  fun line(a: vec, b: vec): Draw
 
 }
