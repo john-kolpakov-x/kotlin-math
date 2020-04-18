@@ -34,4 +34,15 @@ class DrawGraphics2D(private val g: Graphics2D, private val width: Double, priva
     g.dispose()
   }
 
+  override fun circle(point: vec, radius: Int) {
+    circle(point, radius.toDouble())
+  }
+
+  override fun circle(point: vec, radius: Double) {
+    val p = toScreen(point)
+
+    val corner = p - vec(radius, radius)
+
+    g.fillArc(corner.intX, corner.intY, (2 * radius).toInt(), (2 * radius).toInt(), 0, 360)
+  }
 }

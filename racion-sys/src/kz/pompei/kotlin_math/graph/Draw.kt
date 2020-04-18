@@ -9,4 +9,7 @@ interface Draw {
 
   fun line(a: vec, b: vec): Draw
 
+  fun circle(point: vec, radius: Int)
+  fun circle(point: vec, radius: Double)
+
 }
