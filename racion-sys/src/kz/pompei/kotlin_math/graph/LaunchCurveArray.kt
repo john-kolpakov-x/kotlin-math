@@ -35,30 +35,45 @@ class LaunchCurveArray {
 
   private fun draw(d: Draw) {
 
-    val P1 = vec(300, 0)
-    val P2 = vec(300, 100)
-    val P3 = vec(50, 300)
-    val P4 = vec(-350, 100)
-    val P5 = vec(-350, -300)
-    val P6 = vec(0, -50)
-    val P7 = vec(50, -300)
-    val P8 = vec(170, -180)
-    val P9 = vec(170 + 100, -180 - 100)
-    val P10 = vec(170 + 100 + 50, -180 - 100 + 50)
-    val P11 = vec(170 + 50, -180 + 50)
+    val P01 = vec(-50, 200)
+    val P02 = vec(-150, 300)
+    val P03 = vec(-350, 300)
+    val P04 = vec(-400, 250)
+    val P05 = vec(-400, 100)
+    val P06 = vec(-350, 150)
+    val P07 = vec(-350, -250)
+    val P08 = vec(-200, -250)
+    val P09 = vec(150, 100)
+    val P10 = vec(250, 100)
+    val P11 = vec(250, -50)
+    val P12 = vec(50, -150)
+    val P13 = vec(50, -300)
+    val P14 = vec(450, -300)
+    val P15 = vec(450, -150)
+    val P16 = vec(350, -50)
+    val P17 = vec(350, 150)
+    val P18 = vec(150, 150)
+    val P19 = vec(-200, -200)
+    val P20 = vec(-300, -200)
+    val P21 = vec(-300, 150)
+    val P22 = vec(-250, 100)
+    val P23 = vec(-150, 100)
 
-    val curve = CurveArray.brokenLine(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11)
+    val curve = CurveArray.brokenLine(
+      P01, P02, P03, P04, P05, P06, P07, P08, P09, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,
+      P22, P23
+    )
 
     val curveSize = curve.endT - curve.beginT
 
-    val startRay = Ray(vec(-200, -100), vec(50, -15))
+    val startRay = Ray(vec(-250, 250), vec(1.0, 1.1))
     var ray = startRay
 
-    for (i in 1..27) {
+    for (i in 1..400) {
 
       val intersections = curve.intersection(ray)
 
-      val nearIntersection = intersections.minRayT { it.rayT > 1e-10 } ?: return
+      val nearIntersection = intersections.minRayT { it.rayT > 1e-7 } ?: break
 
       d.color(Color.GREEN)
 
