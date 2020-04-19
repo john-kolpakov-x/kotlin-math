@@ -41,6 +41,42 @@ class CurveArray(val curves: List<Curve>) : Curve {
   }
 
   override fun intersection(ray: Ray): CurveRayIntersections {
-    return CurveRayIntersections.union(curves.map { it.intersection(ray) })
+
+    var t = 0.0
+
+    val ret: MutableList<CurveRayIntersection> = mutableListOf()
+
+    for (curve in curves) {
+      val ii = curve.intersection(ray)
+      for (i in ii.list) {
+        ret += CurveRayIntersection(i.rayT, t + i.curveT)
+      }
+
+      t += curve.endT - curve.beginT
+    }
+
+    return CurveRayIntersections(ret)
+  }
+
+  override fun tangentAt(t: Double): vec {
+
+    if (t < 0.0) {
+      throw RuntimeException("l5IS48vfsZ :: t = $t BUT must be in 0 ... $endT")
+    }
+
+    var tt = t
+
+    for (curve in curves) {
+
+      val size = curve.endT - curve.beginT
+      if (tt <= size) {
+        return curve.tangentAt(curve.beginT + tt)
+      }
+
+      tt -= size
+    }
+
+    throw RuntimeException("1hihQ9jdk4 :: t = $t BUT must be in 0 ... $endT")
+
   }
 }

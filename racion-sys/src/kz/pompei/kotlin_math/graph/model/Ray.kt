@@ -41,4 +41,6 @@ class Ray(val O: vec, val dir: vec) : Curve {
 
     return CurveRayIntersections(listOf(CurveRayIntersection(rayT, curveT)))
   }
+
+  override fun tangentAt(t: Double): vec = dir.norm
 }

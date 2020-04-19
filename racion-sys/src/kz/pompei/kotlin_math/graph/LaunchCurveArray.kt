@@ -2,6 +2,7 @@ package kz.pompei.kotlin_math.graph
 
 import kz.pompei.kotlin_math.graph.model.CurveArray
 import kz.pompei.kotlin_math.graph.model.Ray
+import kz.pompei.kotlin_math.graph.model.times
 import kz.pompei.kotlin_math.graph.model.vec
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -41,14 +42,46 @@ class LaunchCurveArray {
     val P5 = vec(-350, -300)
     val P6 = vec(0, -50)
     val P7 = vec(50, -300)
+    val P8 = vec(170, -180)
+    val P9 = vec(170 + 100, -180 - 100)
+    val P10 = vec(170 + 100 + 50, -180 - 100 + 50)
+    val P11 = vec(170 + 50, -180 + 50)
 
-    val curve = CurveArray.brokenLine(P1, P2, P3, P4, P5, P6, P7)
+    val curve = CurveArray.brokenLine(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11)
 
     val curveSize = curve.endT - curve.beginT
 
+    val startRay = Ray(vec(-200, -100), vec(50, -15))
+    var ray = startRay
+
+    for (i in 1..27) {
+
+      val intersections = curve.intersection(ray)
+
+      val nearIntersection = intersections.minRayT { it.rayT > 1e-10 } ?: return
+
+      d.color(Color.GREEN)
+
+      val P = ray.at(nearIntersection.rayT)
+
+      //d.circle(P, 4)
+
+      val tangent = curve.tangentAt(nearIntersection.curveT)
+
+      val norm = tangent.toLeft
+
+      val mirror = ray.dir.norm - 2 * norm * (ray.dir.norm * norm)
+
+      d.line(ray.O, P)
+
+      println("line " + ray.O.intStr + " --- " + P.intStr + "   mirror " + (mirror * 100).intStr)
+
+      ray = Ray(P, mirror)
+    }
+
     d.color(Color.BLACK)
 
-    val N = 7
+    val N = curve.curves.size
 
     for (i in 1..N) {
 
@@ -60,22 +93,6 @@ class LaunchCurveArray {
 
       d.line(A, B)
       d.circle(A, 3)
-    }
-
-    val ray = Ray(vec(-200, -100), vec(50, -15))
-
-    d.color(Color.BLUE)
-    d.line(ray.at(0), ray.at(1))
-    d.circle(ray.at(0), 4)
-
-    val intersections = curve.intersection(ray)
-
-    d.color(Color.GREEN)
-
-    for (i in intersections.list) {
-
-      d.circle(ray.at(i.rayT), 5)
-
     }
 
   }

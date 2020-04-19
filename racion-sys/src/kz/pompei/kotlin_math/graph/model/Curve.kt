@@ -10,4 +10,11 @@ interface Curve {
 
   fun intersection(ray: Ray): CurveRayIntersections
 
+  /**
+   * Получает касательный единичный вектор в указанной точке
+   *
+   * assert beginT <= t && t <= endT
+   */
+  fun tangentAt(t: Double): vec
+
 }

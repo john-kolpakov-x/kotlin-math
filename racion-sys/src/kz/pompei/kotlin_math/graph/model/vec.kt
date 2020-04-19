@@ -6,6 +6,7 @@ import kotlin.math.sqrt
 data class vec(val x: Double, val y: Double) {
   constructor(x: Int, y: Int) : this(x.toDouble(), y.toDouble())
 
+
   val intX: Int get() = x.roundToInt()
   val intY: Int get() = y.roundToInt()
   operator fun times(t: Double): vec = vec(x * t, y * t)
@@ -17,6 +18,11 @@ data class vec(val x: Double, val y: Double) {
   val norm: vec get() = this / sqrt(x * x + y * y)
   val toLeft: vec get() = vec(-y, x)
   val toRight: vec get() = vec(y, -x)
+
+  val intStr: String
+    get() {
+      return "(" + x.roundToInt() + ", " + y.roundToInt() + ")"
+    }
 
 }
 
