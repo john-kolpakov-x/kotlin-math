@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-class LaunchGraph {
+class LaunchEllipse {
 
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      LaunchGraph().exec()
+      LaunchEllipse().exec()
     }
   }
 
